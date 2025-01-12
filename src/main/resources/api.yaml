@@ -109,7 +109,7 @@ components:
           type: number
         temperature:
           type: number
-          description: Tempretuire in C
+          description: Temperature in C
         light:
           type: number
         pressure:
