@@ -5,6 +5,8 @@ import com.cleverlance.academy.aggregator.model.Identification;
 import com.cleverlance.academy.aggregator.model.Person;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.cleverlance.academy.aggregator.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AggregatorController {
     
     private final List<Identification> identifications = new ArrayList<>();
+
+    public AggregatorController(PersonService personService) {
+        this.personService = personService;
+    }
+
+    private final PersonService personService;
     
     @PostMapping("/server")
     public ResponseEntity<Void> saveServer(@RequestBody Identification identification) {
@@ -31,6 +39,15 @@ public class AggregatorController {
     public ResponseEntity<List<Identification>> getIdentifications() {
         
         return ResponseEntity.ok(this.identifications);
+    }
+
+    @PostMapping("/person")
+    public ResponseEntity<Void> savePerson(@RequestBody Person person){
+
+        this.personService.save(person);
+
+        return ResponseEntity.ok().build();
+
     }
     
 }
